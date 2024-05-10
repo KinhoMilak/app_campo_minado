@@ -86,7 +86,7 @@ class Campo {
   }
 
   bool get vizinhancaSegura {
-    return vizinhos.every((v) => !v._minado);
+    return vizinhos.every((v) => !v.minado);
   }
 
   int get qtdeMinasNaVizinhanca {

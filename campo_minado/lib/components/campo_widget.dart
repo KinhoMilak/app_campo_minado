@@ -20,12 +20,8 @@ class CampoWidget extends StatelessWidget {
       return Image.asset('assets/images/bomba_0.jpeg');
     } else if (campo.aberto && campo.minado) {
       return Image.asset('assets/images/bomba_1.jpeg');
-    } else if (campo.aberto && campo.qtdeMinasNaVizinhanca > 0) {
+    } else if (campo.aberto) {
       return Image.asset('assets/images/aberto_$qtMinas.jpeg');
-    } else if (campo.aberto &&
-        !campo.minado &&
-        !(campo.qtdeMinasNaVizinhanca < 0)) {
-      return Image.asset('assets/images/aberto_0.jpeg');
     } else if (campo.marcado) {
       return Image.asset('assets/images/bandeira.jpeg');
     } else {
@@ -37,8 +33,10 @@ class CampoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onAbrir(campo),
-      onLongPress: () => onAlterarmarcacao(campo),
+      onLongPress: () => onAlternarMarcacao(campo),
       child: getImage(),
     );
   }
+
+  onAlternarMarcacao(Campo campo) {}
 }
