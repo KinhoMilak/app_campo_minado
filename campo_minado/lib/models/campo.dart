@@ -24,15 +24,72 @@ class Campo {
     if (deltaColuna <= 1 && deltaColuna <= 1) {
       vizinhos.add(vizinho);
     }
+  }
 
-    void abrir() {
-      if (_aberto) {
-        return;
-      }
-      if (_minado) {
-        _explodido = true;
-        throw ExplosaoException();
+  void abrir() {
+    if (_aberto) {
+      return;
+    }
+    _aberto = true;
+    if (_minado) {
+      _explodido = true;
+      throw ExplosaoException();
+    }
+    if (vizinhancaSegura) {
+      for (var v in vizinhos) {
+        v.abrir();
       }
     }
+  }
+
+  void revelarBombas() {
+    if (_minado) {
+      _aberto = true;
+    }
+  }
+
+  void minar() {
+    _minado = true;
+  }
+
+  void reiniciar() {
+    _aberto = false;
+    _marcado = false;
+    _minado = false;
+    _explodido = false;
+  }
+
+  void alternarMarcca() {
+    _marcado = !_marcado;
+  }
+
+  bool get minado {
+    return _minado;
+  }
+
+  bool get explodido {
+    return _explodido;
+  }
+
+  bool get aberto {
+    return _aberto;
+  }
+
+  bool get marcado {
+    return _marcado;
+  }
+
+  bool get resolvido {
+    bool minadoEmarcado = minado && marcado;
+    bool seguroEaberto = !minado && aberto;
+    return minadoEmarcado || seguroEaberto;
+  }
+
+  bool get vizinhancaSegura {
+    return vizinhos.every((v) => !v._minado);
+  }
+
+  int get qtdeMinasNaVizinhanca {
+    return vizinhos.where((v) => v.minado).length;
   }
 }
